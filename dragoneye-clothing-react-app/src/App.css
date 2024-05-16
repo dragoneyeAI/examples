@@ -1,0 +1,26 @@
+body {
+  background-color: darkslategray;
+  color: white;
+}
+
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.pickerButton {
+  background-color: white;
+  color: darkslategray;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+p {
+  margin: 0;
+}
