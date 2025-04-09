@@ -1,6 +1,6 @@
 # COCO Classes
 
-Below is a table of COCO classes. There are a total of 80 classes in the 2017 iteration of the COCO dataset.
+Below is a table of COCO classes. There are a total of 80 classes in the 2017 iteration of the [COCO dataset](https://cocodataset.org/).
 
 There are some IDs that appear to be skipped in the table. This is because some classes were removed from the COCO dataset over time, and those IDs were preserved as gaps in the ID list.
 
