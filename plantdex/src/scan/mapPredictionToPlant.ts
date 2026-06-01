@@ -1,12 +1,12 @@
 import type { Plant } from "../types/plant";
 import type {
-  ClassificationResult,
-  TaxonPrediction,
+  ImagePredictionResult,
+  PredictedCategory,
 } from "./predictionTypes";
 
 export interface PlantMatch {
   plant: Plant;
-  /** The taxon score that produced the match (0–1). */
+  /** The category score that produced the match (0–1). */
   confidence: number;
   /** The prediction label we matched on (for debugging/UI). */
   matchedOn: string;
@@ -16,15 +16,15 @@ function normalize(s: string): string {
   return s.toLowerCase().replace(/[×]/g, "x").replace(/\s+/g, " ").trim();
 }
 
-/** Flatten a recursive TaxonPrediction tree into (name, score) candidates,
- *  deepest/most-specific nodes first so we prefer species over family. */
-function collectTaxa(
-  node: TaxonPrediction,
-  depth = 0,
-): Array<{ name: string; score: number; depth: number }> {
-  const here = { name: node.displayName, score: node.score, depth };
-  const kids = (node.children ?? []).flatMap((c) => collectTaxa(c, depth + 1));
-  return [...kids, here]; // children (deeper) first
+/** Flatten every object's category predictions into a single ranked list. */
+export function collectCategories(
+  result: ImagePredictionResult,
+): PredictedCategory[] {
+  return (result.object_predictions ?? [])
+    .flatMap((obj) => obj.predictions ?? [])
+    .map((p) => p.category)
+    .filter(Boolean)
+    .sort((a, b) => b.score - a.score);
 }
 
 /** Build a lookup from every searchable name → plant. */
@@ -46,25 +46,20 @@ function buildIndex(plants: Plant[]): Map<string, Plant> {
 }
 
 /**
- * Maps a Dragoneye classification result to a Plantdex entry. Walks the
- * prediction's recursive category taxonomy (most-specific first), and matches
- * each taxon's displayName against plant common/scientific names + aliases —
- * first by exact match, then by substring. Returns the best match or null.
+ * Maps a Dragoneye image-classification result to a Plantdex entry. The custom
+ * `plantdex` model's categories ARE our plants (keyed off `commonName`), so the
+ * happy path is an exact name match; we keep a substring fallback for robustness
+ * against alias/scientific-name variation. Candidate categories are ranked by
+ * score (highest first) so the most confident prediction wins.
  *
- * Pure and dependency-free so it's trivially unit-testable and reusable by the
- * future Scan UI.
+ * Pure and dependency-free so it's trivially unit-testable and reusable.
  */
 export function mapPredictionToPlant(
-  result: ClassificationResult,
+  result: ImagePredictionResult,
   plants: Plant[],
 ): PlantMatch | null {
   const idx = buildIndex(plants);
-
-  // Consider every prediction's category tree; rank candidate taxa by
-  // specificity (depth) then score.
-  const candidates = result.predictions
-    .flatMap((pr) => collectTaxa(pr.category))
-    .sort((a, b) => b.depth - a.depth || b.score - a.score);
+  const candidates = collectCategories(result);
 
   // 1) exact name match
   for (const c of candidates) {
@@ -72,7 +67,7 @@ export function mapPredictionToPlant(
     if (hit) return { plant: hit, confidence: c.score, matchedOn: c.name };
   }
 
-  // 2) fuzzy: a plant key contained in the taxon name or vice-versa
+  // 2) fuzzy: a plant key contained in the category name or vice-versa
   for (const c of candidates) {
     const n = normalize(c.name);
     for (const [key, plant] of idx) {

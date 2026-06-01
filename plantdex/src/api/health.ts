@@ -9,6 +9,9 @@ export interface HealthResponse {
   status: string;
   service: string;
   time: string;
+  /** Whether the server has a Dragoneye key set, so the Scan tab can prompt for
+   *  setup instead of letting the user waste a photo. */
+  scan: { configured: boolean };
 }
 
 export async function checkHealth(signal?: AbortSignal): Promise<HealthResponse> {

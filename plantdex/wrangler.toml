@@ -1,14 +1,15 @@
 # Cloudflare Pages configuration for Plantdex.
 #
 # The app is a static Vite build (output in `dist/`) plus the Pages Functions in
-# `functions/`. Secrets (e.g. DRAGONEYE_API_KEY for the future scan proxy) are
+# `functions/`. Secrets (the DRAGONEYE_API_KEY read by the /api/scan proxy) are
 # NOT stored here — add them as encrypted environment variables in the Pages
 # dashboard, or locally in `.dev.vars` (gitignored) for `wrangler pages dev`.
 name = "plantdex"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-06-01"
 
-# Forward-looking note: when the scan proxy lands it may need
-#   compatibility_flags = ["nodejs_compat"]
-# if it uses the `dragoneye-node` SDK inside the Function. Not needed for the
-# healthcheck.
+# The /api/scan Function uses the `dragoneye-node` SDK, whose media module has
+# dynamic `node:fs`/`node:path` imports (only in its file-path helper, which we
+# don't call). `nodejs_compat` lets the bundler resolve them. Parquet decoding is
+# pure JS (hyparquet + fzstd) — no WASM, no eval — so it runs in workerd.
+compatibility_flags = ["nodejs_compat"]

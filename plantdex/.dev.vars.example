@@ -1,0 +1,6 @@
+# Copy to .dev.vars (gitignored) for local `pnpm pages:dev`.
+# This is a SERVER-SIDE secret read by the /api/scan Pages Function — it is
+# never exposed to the browser. In production, set it as an encrypted
+# environment variable in the Cloudflare Pages dashboard instead.
+# Create a key at https://playground.dragoneye.ai/account
+DRAGONEYE_API_KEY=

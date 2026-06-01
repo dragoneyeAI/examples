@@ -4,16 +4,17 @@ A **Pokédex for plants** — browse stats and info, search/look up plants, and
 collect the ones you've seen. Themed around **common houseplants, herbs, and the
 trees & flowers you actually see around New York City**.
 
-Plantdex is a **fully client-side** app: it loads once and then runs entirely in
-the browser with **no further server calls**. All plant data is bundled with the
-app (`data/plants.json`); only the plant **images** are loaded on demand from
-Wikimedia Commons (URLs are baked into the data). It's an installable PWA, tuned
-for **iPhone / iOS Safari**.
+Plantdex is **offline-first**: it loads once and then browses, searches, and
+collects entirely in the browser. All plant data is bundled with the app
+(`data/plants.json`); only the plant **images** load on demand from Wikimedia
+Commons (URLs are baked into the data). It's an installable PWA, tuned for
+**iPhone / iOS Safari**.
 
 > Built as an example for the [Dragoneye](https://dragoneye.ai) vision API. The
-> **Scan** tab is a placeholder for a future feature: snap a photo → call a
-> server for a species prediction → save it as a discovery. The architecture is
-> already wired for it (see [Future: photo scan](#future-photo-scan)).
+> **Scan** tab is live: snap a photo → a **Cloudflare Pages Function** (`/api/scan`)
+> runs it through the Dragoneye `plantdex` model with the key kept server-side → the
+> matched species is saved to your collection (see [Photo scan](#photo-scan)). This
+> is the one screen that goes online; everything else runs fully offline.
 
 ## Stack
 
@@ -22,6 +23,8 @@ for **iPhone / iOS Safari**.
   discovery celebration) — all gated behind `prefers-reduced-motion`
 - **vite-plugin-pwa** (Workbox) for offline + home-screen install
 - **localStorage** for the collection (behind a swappable `PlantdexStore`)
+- **Cloudflare Pages Functions** for the Scan tab — `/api/scan` proxies Dragoneye
+  so the API key stays server-side (the client never sees it)
 
 ## Develop
 
@@ -36,21 +39,28 @@ pnpm typecheck
 
 ## Backend (Cloudflare Pages Functions)
 
-The future Scan feature needs a server so the Dragoneye API key never reaches the
-browser. That server lives in `functions/` as **Cloudflare Pages Functions**
-(file-based routing). Today there's a single endpoint — `GET /api/health` — which
-a small status pill on the **Scan** tab calls to prove the client→Function path
-end to end.
+So the Dragoneye API key never reaches the browser, the Scan feature calls the
+app's own server, which lives in `functions/` as **Cloudflare Pages Functions**
+(file-based routing). Two endpoints:
+
+- **`POST /api/scan`** (`functions/api/scan.ts`) — receives the captured photo,
+  calls Dragoneye with the server-side `DRAGONEYE_API_KEY`, and returns the flat
+  prediction JSON. The key is read via `context.env` and never sent to the client.
+- **`GET /api/health`** (`functions/api/health.ts`) — a liveness probe that also
+  reports whether `DRAGONEYE_API_KEY` is set (a boolean, never the key). The Scan
+  tab calls it on open to show a "setup needed" prompt instead of wasting a photo.
 
 ```bash
 pnpm pages:dev    # Vite + Functions on one origin (Wrangler), with HMR
 ```
 
-Plain `pnpm dev` does **not** serve Functions, so the Scan pill reads
-"API: down" — that's expected; use `pnpm pages:dev` to exercise `/api/health`.
-The Dragoneye key is read server-side via `context.env.DRAGONEYE_API_KEY` (never
-`VITE_`-prefixed, so never bundled into the client). For local runs that need it,
-put it in `.dev.vars` (gitignored): `DRAGONEYE_API_KEY=your-key`.
+Plain `pnpm dev` does **not** serve Functions, so scanning is unavailable there —
+use `pnpm pages:dev`. Provide the key locally in `.dev.vars` (gitignored; see
+`.dev.vars.example`):
+
+```
+DRAGONEYE_API_KEY=your-key
+```
 
 ## Deploy
 
@@ -74,7 +84,7 @@ run `deploy:preview` while on `main` — it would land on production.)
 2. Create the Pages project once — skip if it already exists or is Git-connected
    (CLI direct uploads work against Git-connected projects too):
    `npx wrangler pages project create plantdex --production-branch main`.
-3. For the Scan feature, set the server secret (the healthcheck doesn't need it):
+3. Set the server secret so scanning works:
    `npx wrangler pages secret put DRAGONEYE_API_KEY --project-name plantdex`.
 
 ## The plant dataset
@@ -109,25 +119,68 @@ Each plant has a stable `id`, `dexNumber`, names, `types`, `habitat`
 `attribution`), and a `taxonRef` (`scientificName` + `aliases`) used to match
 future predictions. See `src/types/plant.ts`.
 
-## Future: photo scan
+## Photo scan
 
-The **Scan** tab is a placeholder today. When wired up it will mirror the
-`dragoneye-clothing-react-app` flow:
+The **Scan** tab takes a photo, runs it through a dedicated Dragoneye custom
+model, and saves the matched species to your collection.
 
-```ts
-const res = await client.classification.predict({
-  image: { blob }, modelName: "dragoneye/<plant-model>",
-});
-const match = mapPredictionToPlant(res, PLANTS);     // src/scan/mapPredictionToPlant.ts
-if (match) await store.discover({ plantId: match.plant.id, source: "scan", rawPrediction: res });
+### Set your API key (server-side)
+
+Scanning is the only feature that calls a server, and unlike the other examples in
+this repo it keeps the key **server-side**. Create a Playground key at
+[playground.dragoneye.ai/account](https://playground.dragoneye.ai/account), then:
+
+```bash
+cp .dev.vars.example .dev.vars   # then paste your key: DRAGONEYE_API_KEY=dgn_...
+pnpm pages:dev                   # serves /api/* alongside the app
 ```
 
-`mapPredictionToPlant` (pure + unit-tested) walks the recursive
-`TaxonPrediction` tree and matches the most-specific taxon against each plant's
-`taxonRef`. The `PlantdexStore` interface and `DiscoveryRecord` already carry the
-`photoRef` / `rawPrediction` / `confidence` fields a scan needs — swapping
-`LocalStorageStore` for an IndexedDB implementation (for photo blobs) requires no
-UI changes.
+In production, set `DRAGONEYE_API_KEY` as a Cloudflare Pages environment variable
+instead (see [Deploy](#deploy)). Without a key the Scan tab shows a "setup needed"
+prompt; the key is never `VITE_`-prefixed and never enters the browser bundle.
+
+### How the proxy works
+
+The browser POSTs the photo to `/api/scan`; the Function does the Dragoneye round
+trip with the **`dragoneye-node` SDK** (server-side, key from `context.env`) and
+returns JSON. This works inside the Cloudflare Workers runtime because the SDK is
+ESM (v3+) and decodes its Zstd-Parquet results with the pure-JS `hyparquet` +
+`fzstd` packages — **no `eval`/`new Function`, no WASM** — which is exactly what
+workerd allows (it blocks runtime code generation and WASM compilation). The only
+config it needs is `compatibility_flags = ["nodejs_compat"]` in `wrangler.toml`,
+so the bundler can resolve the SDK's optional `node:fs`/`node:path` imports (used
+only by a file-path helper we never call). No `index.html` import map is needed.
+
+### The model
+
+The `plantdex` model is a Dragoneye **`recognize_anything`** custom model whose 50
+categories are exactly the plants in `data/plants.json` (each plant's `commonName`,
+with its latin name + description as the category definition). Because we control the
+category names, a prediction's `category.name` maps straight back to a dex entry. The
+model reference is **`recognize_anything/plantdex`** (see `functions/api/scan.ts`).
+
+### The flow
+
+```ts
+// src/scan/dragoneyeClient.ts — client: just a fetch to our own Function
+const form = new FormData();
+form.append("image", file);                                       // File from <input capture>
+const res = await fetch("/api/scan", { method: "POST", body: form });
+const result = await res.json();                                  // flat ImagePredictionResult
+const { match } = mapPredictionToPlant(result, PLANTS);           // src/scan/mapPredictionToPlant.ts
+if (match) await store.discover(match.plant.id, "scan", { confidence: match.confidence });
+```
+
+`functions/api/scan.ts` does the Dragoneye work with the `dragoneye-node` SDK (key
+server-side) and returns the flat JSON. `mapPredictionToPlant` (pure + unit-tested)
+flattens the result's
+`object_predictions[].predictions[].category`, ranks by score, and matches
+`category.name` against each plant's `commonName` / `taxonRef` (exact, then substring).
+
+The captured photo itself is **not persisted** (only the discovery + confidence are).
+`DiscoveryRecord` already carries `photoRef` / `rawPrediction` / `confidence`, so adding
+photo storage later is just swapping `LocalStorageStore` for an IndexedDB implementation
+(`savePhoto` / `getPhoto`) — no UI changes.
 
 ## Image credits
 

@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { mapPredictionToPlant } from "./mapPredictionToPlant";
-import type { ClassificationResult, TaxonPrediction } from "./predictionTypes";
+import type { ImagePredictionResult, PredictedCategory } from "./predictionTypes";
 import type { Plant } from "../types/plant";
 
-// Two minimal fixture plants — enough to prove matching by scientific name,
-// alias, and the deepest-taxon-wins behavior.
+// Two minimal fixture plants — enough to prove matching by common name,
+// scientific name / alias, and highest-score-wins across objects.
 const plants = [
   {
     id: "fiddle-leaf-fig",
@@ -26,43 +26,54 @@ const plants = [
   },
 ] as unknown as Plant[];
 
-function taxon(
-  displayName: string,
-  score: number,
-  children: TaxonPrediction[] = [],
-): TaxonPrediction {
-  return { id: displayName, displayName, score, children };
+let nextId = 1;
+function cat(name: string, score: number): PredictedCategory {
+  return { id: nextId++, name, score };
 }
 
-function result(category: TaxonPrediction): ClassificationResult {
-  return { predictions: [{ normalizedBbox: [0, 0, 1, 1], category, traits: [] }] };
+/** Build a single-object result from one or more category predictions. */
+function result(...categories: PredictedCategory[]): ImagePredictionResult {
+  return {
+    object_predictions: [
+      {
+        normalizedBbox: [0, 0, 1, 1],
+        predictions: categories.map((category) => ({ category, attributes: [] })),
+      },
+    ],
+  };
 }
 
 describe("mapPredictionToPlant", () => {
-  it("matches the deepest (most specific) taxon by scientific name", () => {
-    const tree = taxon("Plant", 0.99, [
-      taxon("Moraceae", 0.95, [taxon("Ficus lyrata", 0.91)]),
-    ]);
-    const match = mapPredictionToPlant(result(tree), plants);
+  it("matches the model's category name exactly (common name)", () => {
+    const match = mapPredictionToPlant(result(cat("Fiddle Leaf Fig", 0.93)), plants);
     expect(match?.plant.id).toBe("fiddle-leaf-fig");
-    expect(match?.confidence).toBeCloseTo(0.91);
+    expect(match?.confidence).toBeCloseTo(0.93);
   });
 
-  it("matches via an alias / common name", () => {
-    const tree = taxon("Snake Plant", 0.88);
-    const match = mapPredictionToPlant(result(tree), plants);
+  it("matches via an alias / scientific name, case-insensitively", () => {
+    const match = mapPredictionToPlant(result(cat("DRACAENA TRIFASCIATA", 0.81)), plants);
     expect(match?.plant.id).toBe("snake-plant");
   });
 
-  it("matches case-insensitively and tolerates the × hybrid sign", () => {
-    const tree = taxon("FICUS LYRATA", 0.8);
-    expect(mapPredictionToPlant(result(tree), plants)?.plant.id).toBe(
-      "fiddle-leaf-fig",
-    );
+  it("prefers the highest-scoring category across multiple objects", () => {
+    const res: ImagePredictionResult = {
+      object_predictions: [
+        {
+          normalizedBbox: [0, 0, 0.5, 1],
+          predictions: [{ category: cat("Snake Plant", 0.42), attributes: [] }],
+        },
+        {
+          normalizedBbox: [0.5, 0, 1, 1],
+          predictions: [{ category: cat("Fiddle Leaf Fig", 0.88), attributes: [] }],
+        },
+      ],
+    };
+    const match = mapPredictionToPlant(res, plants);
+    expect(match?.plant.id).toBe("fiddle-leaf-fig");
+    expect(match?.confidence).toBeCloseTo(0.88);
   });
 
   it("returns null when nothing matches", () => {
-    const tree = taxon("Tyrannosaurus rex", 0.99);
-    expect(mapPredictionToPlant(result(tree), plants)).toBeNull();
+    expect(mapPredictionToPlant(result(cat("Tyrannosaurus rex", 0.99)), plants)).toBeNull();
   });
 });
