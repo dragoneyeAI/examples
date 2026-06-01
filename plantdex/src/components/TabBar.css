@@ -1,0 +1,67 @@
+.tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: stretch;
+  height: calc(var(--tabbar-h) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+  /* The device's bottom "button deck" — opaque dark green, light glyphs. */
+  background: linear-gradient(180deg, var(--dex-800), var(--shell-2));
+  backdrop-filter: saturate(1.4) blur(18px);
+  -webkit-backdrop-filter: saturate(1.4) blur(18px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.tab {
+  min-width: 0; /* grid track is 1fr; let content shrink/ellipsize within it */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: rgba(234, 255, 240, 0.55);
+  transition: color 0.18s ease, transform 0.12s ease;
+}
+
+.tab:active {
+  transform: scale(0.9);
+}
+
+.tab--active {
+  color: var(--dex-300);
+}
+
+.tab__icon {
+  display: grid;
+  place-items: center;
+  height: 26px;
+}
+
+.tab__label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* little glow dot under the active tab */
+.tab--active .tab__icon::after {
+  content: "";
+  position: absolute;
+  margin-top: 34px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--dex-300);
+  box-shadow: 0 0 8px 2px var(--dex-400);
+}

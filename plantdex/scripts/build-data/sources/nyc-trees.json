@@ -1,0 +1,393 @@
+[
+  {
+    "id": "london-plane",
+    "commonName": "London Plane",
+    "latinName": "Platanus × acerifolia",
+    "wikipediaTitle": "London plane",
+    "family": "Platanaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; drought-tolerant once established", "petSafe": true },
+    "aliases": ["london plane", "london planetree", "platanus"]
+  },
+  {
+    "id": "honey-locust",
+    "commonName": "Honey Locust",
+    "latinName": "Gleditsia triacanthos",
+    "family": "Fabaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "bloomMonths": [5, 6],
+    "care": { "light": "Full sun", "watering": "Rainfall; very drought-tolerant", "petSafe": true },
+    "aliases": ["honey locust", "honeylocust", "thorny locust"]
+  },
+  {
+    "id": "callery-pear",
+    "commonName": "Callery Pear",
+    "latinName": "Pyrus calleryana",
+    "family": "Rosaceae",
+    "types": ["tree", "flower"],
+    "habitat": ["street", "park"],
+    "bloomMonths": [3, 4],
+    "care": { "light": "Full sun", "watering": "Rainfall; drought-tolerant", "petSafe": true },
+    "aliases": ["callery pear", "bradford pear"]
+  },
+  {
+    "id": "pin-oak",
+    "commonName": "Pin Oak",
+    "latinName": "Quercus palustris",
+    "family": "Fagaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; tolerates wet soil", "petSafe": true },
+    "aliases": ["pin oak", "swamp oak"]
+  },
+  {
+    "id": "norway-maple",
+    "commonName": "Norway Maple",
+    "latinName": "Acer platanoides",
+    "family": "Sapindaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun to part shade", "watering": "Rainfall; adaptable", "petSafe": true },
+    "aliases": ["norway maple"]
+  },
+  {
+    "id": "littleleaf-linden",
+    "commonName": "Littleleaf Linden",
+    "latinName": "Tilia cordata",
+    "family": "Malvaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "bloomMonths": [6, 7],
+    "care": { "light": "Full sun", "watering": "Rainfall; prefers moist soil", "petSafe": true },
+    "aliases": ["littleleaf linden", "small-leaved lime", "linden"]
+  },
+  {
+    "id": "japanese-zelkova",
+    "commonName": "Japanese Zelkova",
+    "latinName": "Zelkova serrata",
+    "family": "Ulmaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; drought-tolerant once established", "petSafe": true },
+    "aliases": ["japanese zelkova", "zelkova", "keaki"]
+  },
+  {
+    "id": "ginkgo",
+    "commonName": "Ginkgo",
+    "latinName": "Ginkgo biloba",
+    "family": "Ginkgoaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; very tough and drought-tolerant", "petSafe": true },
+    "aliases": ["ginkgo", "maidenhair tree", "gingko"]
+  },
+  {
+    "id": "red-maple",
+    "commonName": "Red Maple",
+    "latinName": "Acer rubrum",
+    "family": "Sapindaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "bloomMonths": [3, 4],
+    "care": { "light": "Full sun to part shade", "watering": "Rainfall; likes moist soil", "petSafe": true },
+    "aliases": ["red maple", "swamp maple"]
+  },
+  {
+    "id": "american-elm",
+    "commonName": "American Elm",
+    "latinName": "Ulmus americana",
+    "family": "Ulmaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; adaptable", "petSafe": true },
+    "aliases": ["american elm", "white elm"]
+  },
+  {
+    "id": "sweetgum",
+    "commonName": "American Sweetgum",
+    "latinName": "Liquidambar styraciflua",
+    "family": "Altingiaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; prefers moist soil", "petSafe": true },
+    "aliases": ["sweetgum", "american sweetgum", "liquidambar"]
+  },
+  {
+    "id": "northern-red-oak",
+    "commonName": "Northern Red Oak",
+    "latinName": "Quercus rubra",
+    "family": "Fagaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; drought-tolerant", "petSafe": true },
+    "aliases": ["northern red oak", "red oak"]
+  },
+  {
+    "id": "kwanzan-cherry",
+    "commonName": "Kwanzan Cherry",
+    "latinName": "Prunus serrulata",
+    "family": "Rosaceae",
+    "types": ["tree", "flower"],
+    "habitat": ["street", "park"],
+    "bloomMonths": [4],
+    "care": { "light": "Full sun", "watering": "Rainfall; prefers moist, well-drained soil", "petSafe": false },
+    "aliases": ["kwanzan cherry", "japanese cherry", "ornamental cherry", "cherry blossom"]
+  },
+  {
+    "id": "eastern-redbud",
+    "commonName": "Eastern Redbud",
+    "latinName": "Cercis canadensis",
+    "family": "Fabaceae",
+    "types": ["tree", "flower"],
+    "habitat": ["street", "park"],
+    "bloomMonths": [4, 5],
+    "care": { "light": "Full sun to part shade", "watering": "Rainfall; moderate moisture", "petSafe": true },
+    "aliases": ["eastern redbud", "redbud"]
+  },
+  {
+    "id": "saucer-magnolia",
+    "commonName": "Saucer Magnolia",
+    "latinName": "Magnolia × soulangeana",
+    "wikipediaTitle": "Magnolia × soulangeana",
+    "family": "Magnoliaceae",
+    "types": ["tree", "flower"],
+    "habitat": ["street", "park"],
+    "bloomMonths": [3, 4],
+    "care": { "light": "Full sun to part shade", "watering": "Rainfall; prefers moist soil", "petSafe": true },
+    "aliases": ["saucer magnolia", "magnolia", "tulip magnolia"]
+  },
+  {
+    "id": "tulip-tree",
+    "commonName": "Tulip Tree",
+    "latinName": "Liriodendron tulipifera",
+    "family": "Magnoliaceae",
+    "types": ["tree", "flower"],
+    "habitat": ["street", "park"],
+    "bloomMonths": [5, 6],
+    "care": { "light": "Full sun", "watering": "Rainfall; prefers moist soil", "petSafe": true },
+    "aliases": ["tulip tree", "tulip poplar", "yellow poplar", "liriodendron"]
+  },
+  {
+    "id": "sugar-maple",
+    "commonName": "Sugar Maple",
+    "latinName": "Acer saccharum",
+    "family": "Sapindaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun to part shade", "watering": "Rainfall; prefers moist soil", "petSafe": true },
+    "aliases": ["sugar maple", "rock maple"]
+  },
+  {
+    "id": "silver-maple",
+    "commonName": "Silver Maple",
+    "latinName": "Acer saccharinum",
+    "family": "Sapindaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; tolerates wet soil", "petSafe": true },
+    "aliases": ["silver maple", "soft maple", "white maple"]
+  },
+  {
+    "id": "japanese-maple",
+    "commonName": "Japanese Maple",
+    "latinName": "Acer palmatum",
+    "family": "Sapindaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun to part shade", "watering": "Rainfall; moderate moisture", "petSafe": true },
+    "aliases": ["japanese maple", "acer palmatum"]
+  },
+  {
+    "id": "white-oak",
+    "commonName": "White Oak",
+    "latinName": "Quercus alba",
+    "family": "Fagaceae",
+    "types": ["tree"],
+    "habitat": ["park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; drought-tolerant", "petSafe": true },
+    "aliases": ["white oak", "quercus alba"]
+  },
+  {
+    "id": "willow-oak",
+    "commonName": "Willow Oak",
+    "latinName": "Quercus phellos",
+    "family": "Fagaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; adaptable", "petSafe": true },
+    "aliases": ["willow oak", "quercus phellos"]
+  },
+  {
+    "id": "black-cherry",
+    "commonName": "Black Cherry",
+    "latinName": "Prunus serotina",
+    "family": "Rosaceae",
+    "types": ["tree", "flower"],
+    "habitat": ["park", "street"],
+    "bloomMonths": [5],
+    "care": { "light": "Full sun", "watering": "Rainfall; adaptable", "petSafe": false },
+    "aliases": ["black cherry", "wild cherry", "rum cherry"]
+  },
+  {
+    "id": "eastern-white-pine",
+    "commonName": "Eastern White Pine",
+    "latinName": "Pinus strobus",
+    "family": "Pinaceae",
+    "types": ["tree"],
+    "habitat": ["park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; prefers moist, well-drained soil", "petSafe": true },
+    "aliases": ["eastern white pine", "white pine", "pinus strobus"]
+  },
+  {
+    "id": "norway-spruce",
+    "commonName": "Norway Spruce",
+    "latinName": "Picea abies",
+    "family": "Pinaceae",
+    "types": ["tree"],
+    "habitat": ["park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; prefers moist soil", "petSafe": true },
+    "aliases": ["norway spruce", "picea abies"]
+  },
+  {
+    "id": "bald-cypress",
+    "commonName": "Bald Cypress",
+    "latinName": "Taxodium distichum",
+    "family": "Cupressaceae",
+    "types": ["tree"],
+    "habitat": ["park", "street"],
+    "care": { "light": "Full sun", "watering": "Rainfall; tolerates wet soil", "petSafe": true },
+    "aliases": ["bald cypress", "swamp cypress", "taxodium"]
+  },
+  {
+    "id": "black-locust",
+    "commonName": "Black Locust",
+    "latinName": "Robinia pseudoacacia",
+    "family": "Fabaceae",
+    "types": ["tree", "flower"],
+    "habitat": ["street", "park"],
+    "bloomMonths": [5, 6],
+    "care": { "light": "Full sun", "watering": "Rainfall; drought-tolerant", "petSafe": false },
+    "aliases": ["black locust", "false acacia", "robinia"]
+  },
+  {
+    "id": "tree-of-heaven",
+    "commonName": "Tree of Heaven",
+    "latinName": "Ailanthus altissima",
+    "family": "Simaroubaceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; thrives anywhere", "petSafe": true },
+    "aliases": ["tree of heaven", "ailanthus", "stink tree"]
+  },
+  {
+    "id": "flowering-dogwood",
+    "commonName": "Flowering Dogwood",
+    "latinName": "Cornus florida",
+    "family": "Cornaceae",
+    "types": ["tree", "flower"],
+    "habitat": ["park", "street"],
+    "bloomMonths": [4, 5],
+    "care": { "light": "Full sun to part shade", "watering": "Rainfall; prefers moist soil", "petSafe": true },
+    "aliases": ["flowering dogwood", "dogwood", "cornus florida"]
+  },
+  {
+    "id": "horse-chestnut",
+    "commonName": "Horse Chestnut",
+    "latinName": "Aesculus hippocastanum",
+    "family": "Sapindaceae",
+    "types": ["tree", "flower"],
+    "habitat": ["park", "street"],
+    "bloomMonths": [5],
+    "care": { "light": "Full sun", "watering": "Rainfall; prefers moist soil", "petSafe": false },
+    "aliases": ["horse chestnut", "conker tree", "aesculus"]
+  },
+  {
+    "id": "crape-myrtle",
+    "commonName": "Crape Myrtle",
+    "latinName": "Lagerstroemia indica",
+    "wikipediaTitle": "Lagerstroemia indica",
+    "family": "Lythraceae",
+    "types": ["tree", "flower"],
+    "habitat": ["street", "park"],
+    "bloomMonths": [7, 8, 9],
+    "care": { "light": "Full sun", "watering": "Rainfall; drought-tolerant", "petSafe": true },
+    "aliases": ["crape myrtle", "crepe myrtle", "lagerstroemia"]
+  },
+  {
+    "id": "eastern-hemlock",
+    "commonName": "Eastern Hemlock",
+    "latinName": "Tsuga canadensis",
+    "family": "Pinaceae",
+    "types": ["tree"],
+    "habitat": ["park"],
+    "care": { "light": "Part shade", "watering": "Rainfall; prefers cool, moist soil", "petSafe": true },
+    "aliases": ["eastern hemlock", "canadian hemlock", "tsuga"]
+  },
+  {
+    "id": "northern-catalpa",
+    "commonName": "Northern Catalpa",
+    "latinName": "Catalpa speciosa",
+    "family": "Bignoniaceae",
+    "types": ["tree", "flower"],
+    "habitat": ["park", "street"],
+    "bloomMonths": [5, 6],
+    "care": { "light": "Full sun", "watering": "Rainfall; adaptable", "petSafe": true },
+    "aliases": ["northern catalpa", "catalpa", "cigar tree"]
+  },
+  {
+    "id": "white-mulberry",
+    "commonName": "White Mulberry",
+    "latinName": "Morus alba",
+    "family": "Moraceae",
+    "types": ["tree"],
+    "habitat": ["street", "park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; very tough and adaptable", "petSafe": true },
+    "aliases": ["white mulberry", "morus alba", "mulberry"]
+  },
+  {
+    "id": "crabapple",
+    "commonName": "Crabapple",
+    "latinName": "Malus",
+    "wikipediaTitle": "Malus",
+    "family": "Rosaceae",
+    "types": ["tree", "flower"],
+    "habitat": ["street", "park"],
+    "bloomMonths": [4, 5],
+    "care": { "light": "Full sun", "watering": "Rainfall; moderate moisture", "petSafe": true },
+    "aliases": ["crabapple", "crab apple", "flowering crabapple", "malus"]
+  },
+  {
+    "id": "weeping-willow",
+    "commonName": "Weeping Willow",
+    "latinName": "Salix babylonica",
+    "family": "Salicaceae",
+    "types": ["tree"],
+    "habitat": ["park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; loves wet soil near water", "petSafe": true },
+    "aliases": ["weeping willow", "willow", "salix babylonica"]
+  },
+  {
+    "id": "eastern-cottonwood",
+    "commonName": "Eastern Cottonwood",
+    "latinName": "Populus deltoides",
+    "family": "Salicaceae",
+    "types": ["tree"],
+    "habitat": ["park"],
+    "care": { "light": "Full sun", "watering": "Rainfall; prefers moist soil", "petSafe": true },
+    "aliases": ["eastern cottonwood", "cottonwood", "populus deltoides"]
+  },
+  {
+    "id": "serviceberry",
+    "commonName": "Serviceberry",
+    "latinName": "Amelanchier canadensis",
+    "wikipediaTitle": "Amelanchier canadensis",
+    "family": "Rosaceae",
+    "types": ["tree", "flower"],
+    "habitat": ["park", "street"],
+    "bloomMonths": [4],
+    "care": { "light": "Full sun to part shade", "watering": "Rainfall; moderate moisture", "petSafe": true },
+    "aliases": ["serviceberry", "shadbush", "juneberry", "amelanchier"]
+  }
+]
