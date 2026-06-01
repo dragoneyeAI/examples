@@ -1,0 +1,48 @@
+.dex-filters {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 2px 0 14px;
+  margin: 0 -16px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.dex-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: transform 0.12s ease, background 0.18s ease, color 0.18s ease;
+}
+.chip:active {
+  transform: scale(0.93);
+}
+.chip--on {
+  color: #04240f;
+  background: var(--dex-300);
+}
+
+.dex-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 460px) {
+  .dex-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
