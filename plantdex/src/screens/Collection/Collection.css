@@ -1,0 +1,111 @@
+.coll__ring-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0 6px;
+}
+
+.ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.ring__center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.coll__pct {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+}
+.coll__pct strong {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 700;
+  background: linear-gradient(180deg, var(--dex-500), var(--dex-800));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.coll__pct span {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.coll__tagline {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 14px;
+  max-width: 280px;
+}
+
+.coll__card {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow);
+}
+
+.coll__h2 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-faint);
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.coll__type-row {
+  display: grid;
+  grid-template-columns: 104px 1fr 40px;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+.coll__type-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.coll__type-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.coll__type-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+.coll__type-count {
+  font-size: 12px;
+  font-weight: 800;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.coll__reset {
+  display: block;
+  margin: 20px auto 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--danger);
+  background: rgba(255, 107, 107, 0.1);
+}
+.coll__reset:active {
+  transform: scale(0.96);
+}

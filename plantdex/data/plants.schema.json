@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Plantdex dataset",
+  "type": "object",
+  "required": ["schemaVersion", "generatedAt", "plantCount", "plants"],
+  "properties": {
+    "schemaVersion": { "type": "integer" },
+    "generatedAt": { "type": "string" },
+    "plantCount": { "type": "integer" },
+    "plants": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/plant" }
+    }
+  },
+  "definitions": {
+    "plant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "dexNumber",
+        "commonName",
+        "latinName",
+        "types",
+        "habitat",
+        "flavorText",
+        "stats",
+        "care",
+        "image",
+        "taxonRef"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "dexNumber": { "type": "integer", "minimum": 1 },
+        "commonName": { "type": "string", "minLength": 1 },
+        "latinName": { "type": "string", "minLength": 1 },
+        "family": { "type": "string" },
+        "types": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {
+            "enum": [
+              "tree",
+              "flower",
+              "herb",
+              "houseplant",
+              "succulent",
+              "cactus",
+              "fern",
+              "shrub",
+              "vine"
+            ]
+          }
+        },
+        "habitat": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "enum": ["indoor", "street", "park"] }
+        },
+        "flavorText": { "type": "string", "minLength": 1 },
+        "bloomMonths": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 1, "maximum": 12 }
+        },
+        "stats": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "light",
+            "water",
+            "humidity",
+            "difficulty",
+            "growthRate",
+            "toxicity"
+          ],
+          "properties": {
+            "light": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "water": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "humidity": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "difficulty": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "growthRate": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "toxicity": { "type": "integer", "minimum": 0, "maximum": 100 }
+          }
+        },
+        "care": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["light", "watering"],
+          "properties": {
+            "light": { "type": "string" },
+            "watering": { "type": "string" },
+            "temperatureC": {
+              "type": "array",
+              "items": { "type": "number" },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "humidity": { "type": "string" },
+            "petSafe": { "type": "boolean" }
+          }
+        },
+        "image": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["url", "thumbUrl", "attribution"],
+          "properties": {
+            "url": { "type": "string", "format": "uri" },
+            "thumbUrl": { "type": "string", "format": "uri" },
+            "attribution": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["license"],
+              "properties": {
+                "license": { "type": "string" },
+                "licenseUrl": { "type": "string" },
+                "author": { "type": "string" },
+                "sourceUrl": { "type": "string" },
+                "title": { "type": "string" }
+              }
+            }
+          }
+        },
+        "taxonRef": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scientificName", "aliases"],
+          "properties": {
+            "wikidataId": { "type": "string" },
+            "scientificName": { "type": "string" },
+            "aliases": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  }
+}

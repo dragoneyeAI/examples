@@ -1,0 +1,27 @@
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  font-weight: 700;
+  color: #04240f;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(12, 47, 24, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.type-badge--md {
+  padding: 5px 11px 5px 9px;
+  font-size: 12.5px;
+}
+
+.type-badge--sm {
+  padding: 3px 8px 3px 6px;
+  font-size: 11px;
+}
+
+.type-badge__glyph {
+  font-size: 1.05em;
+  line-height: 1;
+}

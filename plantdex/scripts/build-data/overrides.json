@@ -1,0 +1,3 @@
+{
+  "_comment": "Manual curation layer, keyed by plant id. Deep-merged LAST over the generated record. Use this to hand-fix stats, types, flavor text, or attribution without touching the pipeline. Example: \"fiddle-leaf-fig\": { \"stats\": { \"difficulty\": 80 } }"
+}
