@@ -1,0 +1,23 @@
+# Cloudflare Pages cache-control overrides.
+#
+# Hashed build assets (assets/index-<hash>.js, fonts, etc.) keep Pages' default
+# long-lived immutable caching — their content can't change without a new name.
+#
+# The PWA entry points, though, MUST always be revalidated so a new deploy takes
+# effect immediately instead of being masked by a stale cache:
+#   - sw.js / registerSW.js — the service worker. If the browser serves a stale
+#     sw.js, it never detects the new version, so the precached (old) app shell
+#     keeps being served forever. `no-cache` forces a revalidate every load, so
+#     `registerType: 'autoUpdate'` can pick up the new SW and reload to it.
+#   - / and index.html — the unhashed entry document.
+#   - manifest.webmanifest — referenced by the entry document.
+/sw.js
+  Cache-Control: no-cache
+/registerSW.js
+  Cache-Control: no-cache
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/manifest.webmanifest
+  Cache-Control: no-cache
