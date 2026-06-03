@@ -11,6 +11,8 @@ README for what to create and how to run it.
   (`dragoneye-node` SDK).
 - **[dragoneye-fastapi-server](./dragoneye-fastapi-server)** — a FastAPI server
   that classifies furniture and extracts its style (`dragoneye-python` SDK).
+- **[trail-camera](./trail-camera)** — a notebook that detects which animals
+  appear in trail-camera photos (`dragoneye-python` SDK).
 
 New to Dragoneye? You'll need an [access token](https://docs.dragoneye.ai/account-management/creating-access-token)
 and a custom model — build one on the [Playground](https://playground.dragoneye.ai/)
