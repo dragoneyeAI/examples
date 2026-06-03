@@ -1,0 +1,14 @@
+# Cloudflare Pages configuration for Plantdex.
+#
+# The app is a static Vite build (output in `dist/`) plus the Pages Functions in
+# `functions/`. Secrets (e.g. DRAGONEYE_API_KEY for the future scan proxy) are
+# NOT stored here — add them as encrypted environment variables in the Pages
+# dashboard, or locally in `.dev.vars` (gitignored) for `wrangler pages dev`.
+name = "plantdex"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-06-01"
+
+# Forward-looking note: when the scan proxy lands it may need
+#   compatibility_flags = ["nodejs_compat"]
+# if it uses the `dragoneye-node` SDK inside the Function. Not needed for the
+# healthcheck.

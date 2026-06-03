@@ -34,6 +34,49 @@ pnpm test         # unit tests (vitest)
 pnpm typecheck
 ```
 
+## Backend (Cloudflare Pages Functions)
+
+The future Scan feature needs a server so the Dragoneye API key never reaches the
+browser. That server lives in `functions/` as **Cloudflare Pages Functions**
+(file-based routing). Today there's a single endpoint — `GET /api/health` — which
+a small status pill on the **Scan** tab calls to prove the client→Function path
+end to end.
+
+```bash
+pnpm pages:dev    # Vite + Functions on one origin (Wrangler), with HMR
+```
+
+Plain `pnpm dev` does **not** serve Functions, so the Scan pill reads
+"API: down" — that's expected; use `pnpm pages:dev` to exercise `/api/health`.
+The Dragoneye key is read server-side via `context.env.DRAGONEYE_API_KEY` (never
+`VITE_`-prefixed, so never bundled into the client). For local runs that need it,
+put it in `.dev.vars` (gitignored): `DRAGONEYE_API_KEY=your-key`.
+
+## Deploy
+
+Deploys build locally and upload `dist/` + `functions/` straight to Cloudflare
+Pages (direct upload) — no Git/CI round-trip needed:
+
+```bash
+pnpm deploy:preview   # deploy the CURRENT branch as a preview
+pnpm deploy:prod      # deploy to PRODUCTION (the `main` branch)
+```
+
+Production vs preview is decided purely by branch name: `deploy:prod` targets the
+project's production branch (`main`); `deploy:preview` tags the deploy with your
+current git branch, which gets its own `<branch>.<project>.pages.dev` URL. (Don't
+run `deploy:preview` while on `main` — it would land on production.)
+
+**One-time setup:**
+
+1. Authenticate Wrangler: `npx wrangler login` (or set `CLOUDFLARE_API_TOKEN` +
+   `CLOUDFLARE_ACCOUNT_ID` for non-interactive use).
+2. Create the Pages project once — skip if it already exists or is Git-connected
+   (CLI direct uploads work against Git-connected projects too):
+   `npx wrangler pages project create plantdex --production-branch main`.
+3. For the Scan feature, set the server secret (the healthcheck doesn't need it):
+   `npx wrangler pages secret put DRAGONEYE_API_KEY --project-name plantdex`.
+
 ## The plant dataset
 
 `data/plants.json` is **generated and committed** — the app ships with zero
