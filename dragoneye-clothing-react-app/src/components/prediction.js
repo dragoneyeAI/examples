@@ -1,73 +1,6 @@
 import "./prediction.css";
 import { LabelGroup, Label, DataBlock } from "./display";
 
-function TaxonPrediction({ prediction }) {
-  const { id, score, displayName, children } = prediction;
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "stretch",
-        gap: 16,
-      }}
-    >
-      <LabelGroup>
-        <Label label="ID" value={id} />
-        <Label label="Name" value={displayName} />
-        {score ? <Label label="Score" value={score.toFixed(2)} /> : null}
-      </LabelGroup>
-      {children.length > 0 ? (
-        <>
-          <p style={{ alignSelf: "center" }}>→</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 16 }}>
-            {children.map((child) => (
-              <TaxonPrediction prediction={child} />
-            ))}
-          </div>
-        </>
-      ) : null}
-    </div>
-  );
-}
-
-function CategoryPrediction({ prediction }) {
-  return (
-    <DataBlock>
-      <TaxonPrediction prediction={prediction} />
-    </DataBlock>
-  );
-}
-
-function TraitTypePrediction({ prediction }) {
-  const { id, displayName, taxons } = prediction;
-
-  return (
-    <DataBlock>
-      <LabelGroup>
-        <Label label="ID" value={id} />
-        <Label label="Name" value={displayName} />
-      </LabelGroup>
-      {taxons.length > 0 ? (
-        <>
-          <p style={{ alignSelf: "center" }}>→</p>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr",
-              gap: 16,
-            }}
-          >
-            {taxons.map((taxon) => (
-              <TaxonPrediction prediction={taxon} />
-            ))}
-          </div>
-        </>
-      ) : null}
-    </DataBlock>
-  );
-}
-
 function NormalizedBbox({ normalizedBbox }) {
   return (
     <DataBlock>
@@ -89,7 +22,38 @@ function NormalizedBbox({ normalizedBbox }) {
   );
 }
 
-export function PredictionResult({ prediction }) {
+function CategoryPrediction({ category }) {
+  return (
+    <DataBlock>
+      <LabelGroup>
+        <Label label="ID" value={category.category_id} />
+        <Label label="Name" value={category.name} />
+        <Label label="Score" value={category.score.toFixed(2)} />
+      </LabelGroup>
+    </DataBlock>
+  );
+}
+
+function AttributePrediction({ attribute }) {
+  // For an image, an attribute holds a single chosen option with one scored
+  // time range.
+  const score = attribute.timestamp_ranges[0]?.score;
+  return (
+    <DataBlock>
+      <LabelGroup>
+        <Label label="Attribute" value={attribute.attribute_name} />
+        <Label label="Value" value={attribute.option_name} />
+        {score != null ? <Label label="Score" value={score.toFixed(2)} /> : null}
+      </LabelGroup>
+    </DataBlock>
+  );
+}
+
+export function PredictionResult({ object }) {
+  // The server returns one tracked object per detection. Each object carries its
+  // bbox observations, its categories, and each category's predicted attributes.
+  const bbox = object.bbox_observations[0]?.normalized_bbox;
+
   return (
     <div
       style={{
@@ -105,16 +69,31 @@ export function PredictionResult({ prediction }) {
         marginTop: 12,
       }}
     >
-      <p className="label" style={{ justifySelf: "end" }}>
-        Normalized Bbox:
-      </p>
-      <NormalizedBbox normalizedBbox={prediction.normalizedBbox} />
+      {bbox ? (
+        <>
+          <p className="label" style={{ justifySelf: "end" }}>
+            Normalized Bbox:
+          </p>
+          <NormalizedBbox normalizedBbox={bbox} />
+        </>
+      ) : null}
+
+      {object.categories.map((category) => (
+        <PerCategory key={category.category_id} category={category} />
+      ))}
+    </div>
+  );
+}
+
+function PerCategory({ category }) {
+  return (
+    <>
       <p className="label" style={{ justifySelf: "end" }}>
         Category:{" "}
       </p>
-      <CategoryPrediction prediction={prediction.category} />
+      <CategoryPrediction category={category} />
       <p className="label" style={{ justifySelf: "end" }}>
-        Traits:
+        Attributes:
       </p>
       <div
         style={{
@@ -124,10 +103,13 @@ export function PredictionResult({ prediction }) {
           justifyItems: "start",
         }}
       >
-        {prediction.traits.map((trait) => (
-          <TraitTypePrediction prediction={trait} />
+        {category.attributes.map((attribute) => (
+          <AttributePrediction
+            key={attribute.attribute_id}
+            attribute={attribute}
+          />
         ))}
       </div>
-    </div>
+    </>
   );
 }
