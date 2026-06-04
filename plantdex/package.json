@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "pages:dev": "wrangler pages dev -- pnpm dev",
-    "deploy:preview": "pnpm build && wrangler pages deploy --branch \"$(git rev-parse --abbrev-ref HEAD)\"",
-    "deploy:prod": "pnpm build && wrangler pages deploy --branch main",
+    "pages:dev": "pnpm build && wrangler pages dev dist",
+    "deploy:preview": "pnpm build && wrangler pages deploy dist --branch \"$(git rev-parse --abbrev-ref HEAD)\"",
+    "deploy:prod": "pnpm build && wrangler pages deploy dist --branch main",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "build:data": "tsx scripts/build-data/buildPlants.ts",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@fontsource/fredoka": "^5.2.10",
+    "dragoneye-node": "^3.0.0",
     "framer-motion": "^11.11.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

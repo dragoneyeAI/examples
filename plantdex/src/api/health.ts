@@ -8,6 +8,8 @@
 export interface HealthResponse {
   status: string;
   service: string;
+  /** Whether the server-side DRAGONEYE_API_KEY is configured (no value leaked). */
+  dragoneyeConfigured: boolean;
   time: string;
 }
 

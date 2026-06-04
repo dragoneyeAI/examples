@@ -1,0 +1,10 @@
+# Local secrets for `pnpm pages:dev` (wrangler reads `.dev.vars`, which is
+# gitignored). Copy this file to `.dev.vars` and fill in your key:
+#
+#   cp .dev.vars.example .dev.vars
+#
+# Create an API key in the Dragoneye Playground: https://playground.dragoneye.ai/account
+# In production this is set as an encrypted environment variable in the
+# Cloudflare Pages dashboard instead. Never prefix it with VITE_ — that would
+# ship the key to the browser bundle.
+DRAGONEYE_API_KEY=your-dragoneye-api-key-here

@@ -1,14 +1,19 @@
 # Cloudflare Pages configuration for Plantdex.
 #
 # The app is a static Vite build (output in `dist/`) plus the Pages Functions in
-# `functions/`. Secrets (e.g. DRAGONEYE_API_KEY for the future scan proxy) are
-# NOT stored here — add them as encrypted environment variables in the Pages
+# `functions/`. Secrets (the DRAGONEYE_API_KEY used by the scan proxy) are NOT
+# stored here — add them as an encrypted environment variable in the Pages
 # dashboard, or locally in `.dev.vars` (gitignored) for `wrangler pages dev`.
+#
+# The build output dir is passed on the CLI — `wrangler pages dev dist` (local,
+# via `pnpm pages:dev`) and `wrangler pages deploy dist` (deploy) — rather than
+# set here as `pages_build_output_dir`, so a single `dist` positional drives both
+# and there's no config-vs-CLI ambiguity.
 name = "plantdex"
-pages_build_output_dir = "dist"
 compatibility_date = "2026-06-01"
 
-# Forward-looking note: when the scan proxy lands it may need
-#   compatibility_flags = ["nodejs_compat"]
-# if it uses the `dragoneye-node` SDK inside the Function. Not needed for the
-# healthcheck.
+# `nodejs_compat` lets the bundler resolve the `dragoneye-node` SDK's optional
+# `node:fs` / `node:path` imports (used only by a file-path helper the scan
+# Function never calls). The SDK decodes its results with pure-JS fzstd +
+# hyparquet — no eval/new Function, no WASM — so it runs inside workerd.
+compatibility_flags = ["nodejs_compat"]
