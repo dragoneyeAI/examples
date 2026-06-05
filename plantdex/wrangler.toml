@@ -8,7 +8,8 @@ name = "plantdex"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-06-01"
 
-# Forward-looking note: when the scan proxy lands it may need
-#   compatibility_flags = ["nodejs_compat"]
-# if it uses the `dragoneye-node` SDK inside the Function. Not needed for the
-# healthcheck.
+# The /api/scan Function uses the `dragoneye-node` SDK. `nodejs_compat` lets the
+# bundler resolve the SDK's optional `node:fs`/`node:path` imports (used only by
+# a file-path helper we never call); the SDK decodes results with pure-JS
+# hyparquet + fzstd, so no WASM/eval is needed at runtime.
+compatibility_flags = ["nodejs_compat"]

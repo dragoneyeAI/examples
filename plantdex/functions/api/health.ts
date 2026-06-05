@@ -1,23 +1,23 @@
 // Cloudflare Pages Function — file-based routing maps this to `GET /api/health`.
 //
-// This is the skeleton entry point for the server side that the future Scan
-// feature (branch 06-01-plantdex_scan_features) will build on: the client will
-// POST a photo to `/api/scan`, this Function will hold the Dragoneye API key as
-// an encrypted secret and proxy the classification call, so the key is never
-// shipped to the browser.
-//
-// For now it's a pure liveness check. It deliberately does NOT read the
-// Dragoneye secret, so the healthcheck reports "ok" even before the key is
-// configured — it verifies the Functions runtime is reachable, nothing more.
+// A liveness check the Scan tab calls on open: it confirms the Functions
+// runtime is reachable AND reports whether the Dragoneye key is configured, so
+// the UI can show a "setup needed" prompt before anyone wastes a photo on a
+// scan that would 503. It only ever returns a boolean — the key itself is never
+// read into the response.
 
-// Shared env shape. The scan-features branch adds `DRAGONEYE_API_KEY: string`
-// here (set as an encrypted env var in the Cloudflare Pages dashboard).
-export interface Env {}
+export interface Env {
+  // Set as an encrypted env var in the Cloudflare Pages dashboard (production)
+  // or in `.dev.vars` for local `pnpm pages:dev`. Never `VITE_`-prefixed.
+  DRAGONEYE_API_KEY?: string;
+}
 
-export const onRequestGet: PagesFunction<Env> = async () => {
+export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   return Response.json({
     status: "ok",
     service: "plantdex-pages-functions",
     time: new Date().toISOString(),
+    // Boolean only — does not leak the key.
+    dragoneyeConfigured: Boolean(env.DRAGONEYE_API_KEY),
   });
 };

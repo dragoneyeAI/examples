@@ -9,6 +9,8 @@ export interface HealthResponse {
   status: string;
   service: string;
   time: string;
+  /** Whether the server-side DRAGONEYE_API_KEY is set (no key value leaked). */
+  dragoneyeConfigured?: boolean;
 }
 
 export async function checkHealth(signal?: AbortSignal): Promise<HealthResponse> {
