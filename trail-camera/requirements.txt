@@ -1,0 +1,4 @@
+dragoneye-python>=2.0.0
+aiohttp
+pillow
+jupyter
