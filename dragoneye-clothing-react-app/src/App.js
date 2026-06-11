@@ -88,7 +88,7 @@ function App() {
       ) : null}
       {imagePredictions
         ? imagePredictions.objects.map((object) => (
-            <PredictionResult key={object.track_id} object={object} />
+            <PredictionResult key={object.object_id} object={object} />
           ))
         : null}
     </div>

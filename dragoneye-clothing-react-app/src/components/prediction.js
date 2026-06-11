@@ -35,9 +35,8 @@ function CategoryPrediction({ category }) {
 }
 
 function AttributePrediction({ attribute }) {
-  // For an image, an attribute holds a single chosen option with one scored
-  // time range.
-  const score = attribute.timestamp_ranges[0]?.score;
+  // For an image, an attribute holds a single chosen option with one score.
+  const score = attribute.score;
   return (
     <DataBlock>
       <LabelGroup>
@@ -50,9 +49,9 @@ function AttributePrediction({ attribute }) {
 }
 
 export function PredictionResult({ object }) {
-  // The server returns one tracked object per detection. Each object carries its
-  // bbox observations, its categories, and each category's predicted attributes.
-  const bbox = object.bbox_observations[0]?.normalized_bbox;
+  // The server returns one detected object per detection. Each object carries its
+  // bbox observation, its categories, and each category's predicted attributes.
+  const bbox = object.bbox_observation?.normalized_bbox;
 
   return (
     <div
