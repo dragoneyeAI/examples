@@ -1,0 +1,174 @@
+.home__streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 15px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 138, 76, 0.16);
+  color: #ffb784;
+  font-weight: 700;
+}
+.home__streak strong {
+  font-size: 17px;
+  color: #ffd0aa;
+}
+
+/* Plant of the day */
+.home__potd-link {
+  display: block;
+}
+.home__potd {
+  display: flex;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  min-height: 132px;
+}
+.home__potd-media {
+  flex: none;
+  width: 42%;
+  position: relative;
+}
+.home__potd-media .attr-img {
+  height: 100%;
+}
+.home__potd-body {
+  flex: 1;
+  padding: 14px 16px;
+  color: #04240f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.home__potd-body .eyebrow {
+  color: rgba(4, 36, 15, 0.7);
+}
+.home__potd-name {
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin-top: 4px;
+  line-height: 1.1;
+}
+.home__potd-latin {
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(4, 36, 15, 0.72);
+  margin-top: 2px;
+}
+.home__potd-types {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.home__seen {
+  font-size: 12px;
+  font-weight: 800;
+  color: #04240f;
+  background: rgba(255, 255, 255, 0.45);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+/* Quick resume */
+.home__resume {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 10px 14px 10px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.home__resume:active {
+  background: var(--surface-2);
+}
+.home__resume-img {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.home__resume-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.home__resume-text strong {
+  font-size: 15px;
+}
+.home__resume-arrow {
+  font-size: 24px;
+  color: var(--text-faint);
+}
+
+/* Seasonal */
+.home__season {
+  margin-top: 22px;
+}
+.home__section-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.home__season-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin: 0 -16px;
+  padding: 2px 16px 6px;
+}
+.home__season-scroll::-webkit-scrollbar {
+  display: none;
+}
+.home__season-card {
+  flex: none;
+  width: 104px;
+}
+.home__season-img {
+  width: 104px;
+  height: 104px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.home__season-name {
+  display: block;
+  margin-top: 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-dim);
+  line-height: 1.2;
+}
+
+/* CTAs */
+.home__cta-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+}
+.home__cta {
+  flex: 1;
+  text-align: center;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  font-weight: 800;
+  font-size: 14px;
+  background: var(--dex-300);
+  color: #04240f;
+}
+.home__cta--alt {
+  background: var(--surface-2);
+  color: var(--text);
+}
+.home__cta:active {
+  transform: scale(0.97);
+}

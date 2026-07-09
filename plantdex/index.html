@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+    <!-- viewport-fit=cover lets the app extend under the iPhone notch/home bar;
+         we then pad with env(safe-area-inset-*). maximum-scale + user-scalable=no
+         keep it feeling like a native dex (no accidental pinch-zoom). -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="theme-color" content="#0c3b1e" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Plantdex" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <title>Plantdex</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

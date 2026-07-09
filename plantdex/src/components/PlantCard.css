@@ -1,0 +1,102 @@
+.plant-card {
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 2px solid transparent;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+/* Discovered cards wear their type color: a soft glow + tinted body so the
+   grid reads like a shelf of registered specimens. (--accent is set per-card
+   from the plant's primary type in PlantCard.tsx.) */
+.plant-card--caught {
+  box-shadow: var(--shadow), 0 0 0 1px var(--accent),
+    0 6px 18px -6px var(--accent);
+}
+
+.plant-card__link {
+  display: block;
+}
+
+.plant-card__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--surface);
+}
+
+.plant-card__media :where(.attr-img) {
+  height: 100%;
+}
+
+/* Undiscovered = a touch muted, but still visible for browsing/lookup. */
+.plant-card__media--undiscovered .attr-img__img {
+  filter: saturate(0.55) brightness(0.82);
+}
+
+.plant-card__dex {
+  position: absolute;
+  top: 7px;
+  left: 8px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(4px);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.plant-card__caught {
+  position: absolute;
+  top: 6px;
+  right: 7px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #04240f;
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.plant-card__glyph {
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+  font-size: 16px;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+}
+
+.plant-card__body {
+  padding: 9px 11px 11px;
+  border-top: 1px solid var(--hairline);
+}
+.plant-card--caught .plant-card__body {
+  background: var(--accent-soft);
+}
+
+.plant-card__name {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.plant-card__latin {
+  margin-top: 2px;
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--text-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
