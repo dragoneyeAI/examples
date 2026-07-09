@@ -1,2 +1,7 @@
 allowBuilds:
   esbuild: false
+  # sharp is only used by Wrangler for image transforms we don't exercise.
+  sharp: false
+  # workerd is the Cloudflare Pages Functions runtime used by `pnpm pages:dev`;
+  # its postinstall fetches the platform binary, so it must be allowed to build.
+  workerd: true

@@ -4,3 +4,7 @@ dist-ssr
 *.local
 .DS_Store
 scripts/build-data/.cache
+
+# Cloudflare Wrangler local secrets (e.g. DRAGONEYE_API_KEY) and dev state
+.dev.vars
+.wrangler
